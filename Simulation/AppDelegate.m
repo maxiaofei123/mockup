@@ -8,6 +8,11 @@
 
 #import "AppDelegate.h"
 
+
+#define Main_Screen_Height   [[UIScreen mainScreen] bounds].size.height
+#define Main_Screen_Width    [[UIScreen mainScreen] bounds].size.width
+
+
 @interface AppDelegate ()
 
 @end
@@ -16,6 +21,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+ 
+    [NSThread sleepForTimeInterval:2.0];
+    self.window.backgroundColor = [UIColor colorWithRed:39/255. green:44/255. blue:54/255. alpha:1.];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
+    [self.window makeKeyAndVisible];
     // Override point for customization after application launch.
     return YES;
 }
