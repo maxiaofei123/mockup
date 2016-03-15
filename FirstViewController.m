@@ -8,6 +8,7 @@
 
 #import "FirstViewController.h"
 #import "CookingViewController.h"
+#import "Normal_ViewController.h"
 
 #define Main_Screen_Height   [[UIScreen mainScreen] bounds].size.height
 #define Main_Screen_Width    [[UIScreen mainScreen] bounds].size.width
@@ -55,6 +56,9 @@
 //    //取消定时器
 //    [self.responsTimer invalidate];
 //    self.responsTimer = nil;
+    
+//    Normal_ViewController *view = [[Normal_ViewController alloc] init];
+//    [self presentViewController:view animated:YES completion:nil];
     
     CookingViewController *view = [[CookingViewController alloc] init];
     [self presentViewController:view animated:YES completion:nil];

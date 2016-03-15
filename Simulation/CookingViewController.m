@@ -9,6 +9,9 @@
 #import "CookingViewController.h"
 #import "Normal_ViewController.h"
 #import "AppDelegate.h"
+#import <AudioToolbox/AudioToolbox.h>
+
+static SystemSoundID shake_sound_male_id = 0;
 
 #define Main_Screen_Height      [[UIScreen mainScreen] bounds].size.height
 #define Main_Screen_Width       [[UIScreen mainScreen] bounds].size.width
@@ -47,6 +50,7 @@
 
 @property (nonatomic ,strong)AVSpeechSynthesizer * AV;
 
+
 @end
 
 @implementation CookingViewController
@@ -69,7 +73,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    NSArray *familyNames = [UIFont familyNames];
+    for( NSString *familyName in familyNames ){
+        printf( "Family: %s \n", [familyName UTF8String] );
+        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
+        for( NSString *fontName in fontNames ){
+            printf( "\tFont: %s \n", [fontName UTF8String] );
+        }
+    }
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height)];
     imageView.backgroundColor = [UIColor colorWithRed:39/255. green:44/255. blue:54/255. alpha:1.];
     imageView.userInteractionEnabled = YES;
@@ -85,7 +96,8 @@
     [button1 setBackgroundImage:[UIImage imageNamed:@"upNormal.png"] forState:UIControlStateNormal];
     [button1 setBackgroundImage:[UIImage imageNamed:@"upSelcted.png"] forState:UIControlStateSelected];
 
-    
+    button1.alpha = 0.7;
+    button2.alpha = 0.7;
     button2 = [[UIButton alloc] initWithFrame:CGRectMake(Main_Screen_Width-150, 120+h+h, 120, 120)];
     [button2 addTarget:self action:@selector(nextAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button2];
@@ -157,6 +169,9 @@
                         @"Under the salmon skin into the pan, then press the salomn middle",
                         @"place the salmon into the pan skin-side-down",
                         @"then press the salmon in the middle",
+                        @"将3个鸡蛋打入碗内",
+                        @"用叉子快速搅拌持续30秒，使蛋白和蛋黄充分融合",
+                        @"将搅拌好的鸡蛋放到一边备用",
                         nil];
     
     self.imageDic = @{
@@ -169,23 +184,25 @@
     
     self.timeDic = @{
                       @"0":@"0",
-                      @"1":@"10",
-                      @"2":@"9",
-                      @"3":@"4",
-                      @"4":@"7",
-                      @"5":@"2",
-                      @"6":@"7",
-                      @"7":@"3",
-                      @"8":@"8",
+                      @"1":@"6",
+                      @"2":@"0",
+                      @"3":@"3",
+                      @"4":@"0",
+                      @"5":@"0",
+                      @"6":@"5",
+                      @"7":@"0",
+                      @"8":@"0",
                       @"9":@"6",
                       @"10":@"0",
-                      @"11":@"0",
+                      @"11":@"7",
                       @"12":@"0",
                       };
     
     self.index = 0 ;
+    
 
     [self initTableview];
+    
 }
 
 - (void)circleAnimationTypeOne
@@ -223,6 +240,7 @@
     
     self.myTableView.dataSource = self;
     self.myTableView.delegate = self;
+    self.myTableView.userInteractionEnabled = NO;
     
     [self.myTableView setTableFooterView:view];
     
@@ -280,7 +298,7 @@
     self.timeOne --;
    
     if (self.timeOne ==0 ) {
-        
+        [self playSound];
         //停止定时器 停止写入数据
         self.timerOnetime.fireDate = [NSDate distantFuture];
         self.button2.enabled = YES;
@@ -297,11 +315,12 @@
         [button2 setBackgroundImage:[UIImage imageNamed:@"done.png"] forState:UIControlStateNormal];
         [button2 setBackgroundImage:[UIImage imageNamed:@"done.png"] forState:UIControlStateSelected];
         [button2 setTitle:[NSString stringWithFormat:@"%ld",(long)self.timeOne] forState:UIControlStateNormal];
+       
+//        _AV = [[AVSpeechSynthesizer alloc]init];
+//        AVSpeechUtterance *utterance = [[AVSpeechUtterance alloc]initWithString:[NSString stringWithFormat:@"%ld",(long)self.timeOne]];  //需要转换的文本
+//        [_AV speakUtterance:utterance];
         
-        
-        _AV = [[AVSpeechSynthesizer alloc]init];
-        AVSpeechUtterance *utterance = [[AVSpeechUtterance alloc]initWithString:[NSString stringWithFormat:@"%ld",(long)self.timeOne]];  //需要转换的文本
-        [_AV speakUtterance:utterance];
+        [self playSound];
     }
 }
 
@@ -367,40 +386,54 @@
     cell.textLabel.backgroundColor = [UIColor clearColor];
     
     NSString * str = [self.allStepArr objectAtIndex:indexPath.row] ;
-    
-    CGSize size = CGSizeMake( Main_Screen_Width-180,2000);
-    CGSize labelsize = [[str substringFromIndex:2] sizeWithFont:[UIFont systemFontOfSize:40] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
-    
-//   10, 0, Main_Screen_Width-180, labelsize.height< 150?labelsize.height:150
-    
     UILabel *  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, Main_Screen_Width-180, 145)];
-    
     titleLabel.lineBreakMode = UILineBreakModeWordWrap;
     titleLabel.numberOfLines = 0;
-    titleLabel.font = [UIFont fontWithName:@"EncodeSans-Medium" size:40];
     [cell.contentView addSubview:titleLabel];
-    titleLabel.font = [UIFont fontWithName:@"EncodeSans-Regular" size:34];
-
     titleLabel.text = str;
-    titleLabel.textColor = [UIColor colorWithRed:117/255. green:122/255. blue:129/255. alpha:1.];
-//    cell.backgroundColor = cell.backgroundColor = [UIColor colorWithRed:(0.0/255.0)green:(0.0/255.0)  blue:(0.0/255.0) alpha:.5];
-//    cell.backgroundColor = [UIColor grayColor];
+    
+    BOOL bl = [self IsChinese:str];
+    
     if (indexPath.row == self.index) {
         
-        titleLabel.font = [UIFont fontWithName:@"EncodeSans-Medium" size:38];
-        titleLabel.textColor = [UIColor whiteColor];
-        
-        if ([[self.imageDic allKeys] containsObject:[NSString stringWithFormat:@"%ld",self.index]]) {
-            self.imageView.image = [UIImage imageNamed:[self.imageDic objectForKey:[NSString stringWithFormat:@"%ld",self.index]]];
+        if (bl) {
             
-            cell.backgroundColor = cell.backgroundColor = [UIColor colorWithRed:(0.0/255.0)green:(0.0/255.0)  blue:(0.0/255.0) alpha:.5];
+           titleLabel.font = [UIFont fontWithName:@"FZLanTingHei-R-GBK" size:32];
             
-        }else
-        {
-            self.imageView.image = nil;
-            cell.backgroundColor = [UIColor clearColor];
+        }else{
+            
+            titleLabel.font = [UIFont fontWithName:@"EncodeSans-Medium" size:32];
         }
+        
+        titleLabel.textColor = [UIColor colorWithRed:229/255. green:229/255. blue:230/255. alpha:1.];
+        
+    }else
+    {
+    
+        if (bl) {
+            
+            titleLabel.font = [UIFont fontWithName:@"FZLTXHK" size:32];
+            
+        }else{
+            
+            titleLabel.font = [UIFont fontWithName:@"EncodeSans-Regular" size:32];
+        }
+        titleLabel.textColor = [UIColor colorWithRed:229/255. green:229/255. blue:230/255. alpha:0.5];
+        
     }
+    
+    if ([[self.imageDic allKeys] containsObject:[NSString stringWithFormat:@"%ld",self.index]]) {
+        
+        cell.backgroundColor = cell.backgroundColor = [UIColor colorWithRed:(0.0/255.0)green:(0.0/255.0)  blue:(0.0/255.0) alpha:.3];
+        
+        self.imageView.image = [UIImage imageNamed:[self.imageDic objectForKey:[NSString stringWithFormat:@"%ld",self.index]]];
+        
+    }else
+    {
+        self.imageView.image = nil;
+        cell.backgroundColor = [UIColor clearColor];
+    }
+
     
     return cell;
 }
@@ -411,6 +444,34 @@
     return 150;
 }
 
+-(void) playSound
+
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"music" ofType:@"mp3"];
+    if (path) {
+        //注册声音到系统
+        AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id);
+        AudioServicesPlaySystemSound(shake_sound_male_id);
+        //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
+    }
+    
+    AudioServicesPlaySystemSound(shake_sound_male_id);   //播放注册的声音，（此句代码，可以在本类中的任意位置调用，不限于本方法中）
+    
+    //    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);   //让手机震动
+}
+
+
+-(BOOL)IsChinese:(NSString *)str {
+    
+    for(int i=0; i< [str length];i++)
+    {
+        int a = [str characterAtIndex:i];
+
+        if( a > 0x4e00 && a < 0x9fff)
+            return YES;
+    }
+    return NO;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

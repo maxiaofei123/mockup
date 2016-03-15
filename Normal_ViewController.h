@@ -13,9 +13,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *next;
 @property (weak, nonatomic) IBOutlet UIButton *add;
 @property (weak, nonatomic) IBOutlet UIButton *subtract;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeMinuteTensLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeMinuteLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *powerLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeSecondTensLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeSecondLabel;
 
 - (IBAction)backAction:(id)sender;
 
