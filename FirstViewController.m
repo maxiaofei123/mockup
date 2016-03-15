@@ -32,8 +32,8 @@
     UILabel * lableContent = [[UILabel alloc] initWithFrame:CGRectMake(10, 130, Main_Screen_Width-20, 200)];
 //    lableContent.textAlignment = NSTextAlignmentCenter;
     lableContent.textColor = [UIColor colorWithRed:117/255. green:122/255. blue:129/255. alpha:1.];
-    lableContent.font = [UIFont fontWithName:@"EncodeSans-Regular" size:36];
-    lableContent.text = @"Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the user quits the application and it begins the transition to the background state.";
+    lableContent.font = [UIFont fontWithName:@"EncodeSans-Regular" size:34];
+    lableContent.text = @"Sent when the application is about  move from active to inactive state. This can  for certain types of temporary interruptions such as an incoming phone call or SMS message) or when the user quits the user quits the application and it begins the transition to the background state.";
     lableContent.lineBreakMode = UILineBreakModeWordWrap;
     lableContent.numberOfLines = 0;
 
