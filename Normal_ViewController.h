@@ -25,4 +25,8 @@
 - (IBAction)nextAction:(id)sender;
 - (IBAction)subtractAction:(id)sender;
 - (IBAction)addAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *secondView;
+
+@property (weak, nonatomic) IBOutlet UIView *minutesView;
+
 @end

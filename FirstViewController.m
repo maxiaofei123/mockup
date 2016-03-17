@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.view.backgroundColor = [UIColor colorWithRed:39/255. green:44/255. blue:54/255. alpha:1.];
+    self.view.backgroundColor = [UIColor colorWithRed:50/255. green:58/255. blue:69/255. alpha:1.];
     
     UILabel * lableTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, Main_Screen_Width, 50)];
     lableTitle.text = @"A.Kitchen";
@@ -33,7 +33,7 @@
     UILabel * lableContent = [[UILabel alloc] initWithFrame:CGRectMake(10, 130, Main_Screen_Width-20, 200)];
 //    lableContent.textAlignment = NSTextAlignmentCenter;
     lableContent.textColor = [UIColor colorWithRed:117/255. green:122/255. blue:129/255. alpha:1.];
-    lableContent.font = [UIFont fontWithName:@"EncodeSans-Regular" size:34];
+    lableContent.font = [UIFont fontWithName:@"Lato-Light" size:32];
     lableContent.text = @"Sent when the application is about  move from active to inactive state. This can  for certain types of temporary interruptions such as an incoming phone call or SMS message) or when the user quits the user quits the application and it begins the transition to the background state.";
     lableContent.lineBreakMode = UILineBreakModeWordWrap;
     lableContent.numberOfLines = 0;

@@ -13,6 +13,10 @@
 @property(nonatomic,assign)NSInteger  secondTime;
 @property(nonatomic,assign)NSInteger minuteTime;
 
+@property(nonatomic,assign)NSInteger power;
+
+@property(nonatomic,assign)BOOL selectTens;
+
 @end
 
 @implementation Normal_ViewController
@@ -28,6 +32,30 @@
     [subtract setBackgroundImage:[UIImage imageNamed:@"subtract"] forState:UIControlStateNormal];
     _secondTime = 0;
     _minuteTime = 0;
+
+    self.power = 0;
+    
+    self.selectTens = NO;
+    
+    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selecteViewMinute)];
+    [self.minutesView addGestureRecognizer:singleTap];
+    
+    UITapGestureRecognizer* secondeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectViewSecond)];
+    [self.secondView addGestureRecognizer:secondeTap];
+    
+}
+
+-(void)selecteViewMinute
+{
+
+    self.selectTens = YES;
+}
+
+-(void)selectViewSecond
+{
+    
+    self.selectTens = NO;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,44 +63,103 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)changeTextColor
+
+-(void)reviewLabel
 {
-    NSString * minuteStr ;
+
+    self.powerLabel.text = [NSString stringWithFormat:@"%ld",self.power];
+    
+    //minutes
     
     if (self.minuteTime < 10) {
-        minuteStr = [NSString stringWithFormat:@"0%ld",self.minuteTime];
+        
+        self.timeMinuteTensLabel.text = @"0";
+        self.timeMinuteLabel.text = [NSString stringWithFormat:@"%ld",self.minuteTime];
     }else
     {
-        minuteStr =[NSString stringWithFormat:@"%ld",self.minuteTime];
+        NSInteger ten = self.minuteTime/10;
+        NSInteger unit = self.minuteTime%10;
+        
+        self.timeMinuteTensLabel.text = [NSString stringWithFormat:@"%ld",ten];
+        self.timeMinuteLabel.text = [NSString stringWithFormat:@"%ld",unit];
     }
     
-  
-    
+    //second
+    if (self.secondTime < 10) {
+        
+        self.timeSecondTensLabel.text = @"0";
+        self.timeSecondLabel.text = [NSString stringWithFormat:@"%ld",self.secondTime];
+    }else
+    {
+        NSInteger ten = self.secondTime/10;
+        NSInteger unit = self.secondTime%10;
+        
+        self.timeSecondTensLabel.text = [NSString stringWithFormat:@"%ld",ten];
+        self.timeSecondLabel.text = [NSString stringWithFormat:@"%ld",unit];
+    }
+
 }
 
 - (IBAction)backAction:(id)sender {
+    
+    if (self.power < 9) {
+        self.power ++ ;
+    }
+    [self reviewLabel];
 }
 
 - (IBAction)nextAction:(id)sender {
+    
+    if (self.power > 0) {
+        self.power --;
+    }
+     [self reviewLabel];
 }
 
 - (IBAction)subtractAction:(id)sender {
     
-    if (self.minuteTime > 0) {
-        
-        self.minuteTime --;
+    if (self.selectTens) {
+        if (self.minuteTime > 0) {
+            
+            self.minuteTime --;
+        }
+    }else
+    {
+        if (self.secondTime > 0) {
+            
+            self.secondTime --;
+        }
+    
     }
     
-    [self changeTextColor];
+     [self reviewLabel];
+
 }
 
 - (IBAction)addAction:(id)sender {
     
-    if (self.minuteTime < 59) {
+    if (self.selectTens) {
         
-        self.minuteTime ++;
+        if (self.minuteTime < 59) {
+            
+            self.minuteTime ++;
+        }
+    }else
+    {
+        if (self.secondTime < 59) {
+            
+            self.secondTime ++;
+            
+        }else if(self.secondTime == 59)
+        {
+            if (self.minuteTime < 59) {
+               self.minuteTime ++ ;
+                self.secondTime = 0;
+            }
+        }
     }
     
-    [self changeTextColor];
+     [self reviewLabel];
+
 }
 @end
