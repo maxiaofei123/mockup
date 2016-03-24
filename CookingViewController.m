@@ -10,6 +10,7 @@
 #import "Normal_ViewController.h"
 #import "AppDelegate.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "DataDoc.h"
 
 static SystemSoundID shake_sound_male_id = 0;
 
@@ -47,6 +48,13 @@ static SystemSoundID shake_sound_male_id = 0;
 @property (nonatomic ,assign) NSInteger  timeOne;
 @property (nonatomic ,assign) NSInteger  numberTime;
 
+@property (nonatomic ,strong) NSTimer * showCookTimer;
+@property (nonatomic ,assign) NSInteger showCookFlag;
+
+@property (nonatomic ,strong) NSTimer * animalLeftTimer;
+@property (nonatomic ,assign) BOOL tableViewLeft;
+@property (nonatomic ,assign) NSInteger animalFlag;
+
 @property (nonatomic ,strong) NSTimer * outTimer;
 
 @property (nonatomic ,assign) BOOL flagShow;
@@ -54,7 +62,7 @@ static SystemSoundID shake_sound_male_id = 0;
 
 @property (nonatomic ,strong)AVSpeechSynthesizer * AV;
 
-@property(nonatomic,strong)UIImageView  * viewOne;
+@property(nonatomic,strong)UIView  * viewOne;
 
 @property(nonatomic,assign)NSInteger outTimeFlag;
 
@@ -82,6 +90,9 @@ static SystemSoundID shake_sound_male_id = 0;
     [self.doneTimer invalidate];
     self.doneTimer = nil;
     
+    [self.animalLeftTimer invalidate];
+    self.animalLeftTimer = nil;
+    
     
 }
 
@@ -90,27 +101,47 @@ static SystemSoundID shake_sound_male_id = 0;
 
     self.view.backgroundColor = [UIColor colorWithRed:50/255. green:58/255. blue:69/255. alpha:1.];
     
-    [self viewTwo];
+    [self DrawViewTwo];
     
-    self.viewOne = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height)];
-    self.viewOne.image = [UIImage imageNamed:@"5.jpg"];
-    self.viewOne.userInteractionEnabled = YES;
+    [self DrawViewOne];
+}
+
+-(void)initData
+{
+
+    
+}
+
+/*
+ *绘制第一个要消失的界面
+ */
+
+-(void)DrawViewOne
+{
+    self.viewOne = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height)];
+    self.viewOne.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.viewOne];
     
     UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewOut)];
     [self.viewOne addGestureRecognizer:singleTap];
-
     
-    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 40, Main_Screen_Width-180, 150)];
-    view.backgroundColor =[UIColor colorWithRed:(52/255.0)green:(48/255.0)  blue:(48/255.0) alpha:.5];
-    [self.viewOne addSubview:view];
     
-    UILabel * lable = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, Main_Screen_Width-200, 150)];
-    lable.text = @"Seared Salmon";
-    lable.font = [UIFont fontWithName:@"Lato-Semibold" size:36];
-    lable.textColor = [UIColor colorWithRed:229/255. green:229/255. blue:230/255. alpha:1.];
-    [view addSubview:lable];
+    UILabel * lableTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, Main_Screen_Width, 50)];
+    lableTitle.text = @"A.Kitchen";
+    lableTitle.textAlignment = NSTextAlignmentCenter;
+    lableTitle.textColor = [UIColor colorWithRed:195/255. green:196/255. blue:199/255. alpha:1.];
+    lableTitle.font = [UIFont fontWithName:@"EncodeSans-Medium" size:40];
+    [self.viewOne addSubview:lableTitle];
     
+    UILabel * lableContent = [[UILabel alloc] initWithFrame:CGRectMake(10, 130, Main_Screen_Width-20, 200)];
+    lableContent.textColor = [UIColor colorWithRed:117/255. green:122/255. blue:129/255. alpha:1.];
+    lableContent.font = [UIFont fontWithName:@"Lato-Light" size:32];
+    lableContent.text = @"Sent when the application is about  move from active to inactive state. This can  for certain types of temporary interruptions such as an incoming phone call or SMS message) or when the user quits the user quits the application and it begins the transition to the background state.";
+    
+    lableContent.lineBreakMode = NSLineBreakByCharWrapping;
+    lableContent.numberOfLines = 0;
+    
+    [self.viewOne addSubview:lableContent];
 }
 
 -(void)viewOut
@@ -136,7 +167,7 @@ static SystemSoundID shake_sound_male_id = 0;
 
 {
     [self.viewOne removeFromSuperview];
-    
+    button2.hidden = NO;
     
     [UIView beginAnimations:nil context:nil];
     
@@ -145,16 +176,22 @@ static SystemSoundID shake_sound_male_id = 0;
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     
     [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
-
+    self.myTableView.alpha = 1.0f;
+    self.imageView.alpha = 1.0;
+    button1.alpha = 1.0;
+    button2.alpha = 1.0;
     [UIView commitAnimations];
     
+    //启动定时器
+    self.showCookTimer.fireDate = [NSDate distantPast];
 }
-
 
 -(void)labelOutView
 {
     if (self.outTimeFlag > 0) {
+        
         self.outTimeFlag -- ;
+        
     }else{
         [self.outTimer invalidate];
         
@@ -194,7 +231,11 @@ static SystemSoundID shake_sound_male_id = 0;
     
 }
 
--(void)viewTwo
+
+/*
+ *绘制第二个要消失的界面
+ */
+-(void)DrawViewTwo
 {
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height)];
     imageView.backgroundColor = [UIColor colorWithRed:50/255. green:58/255. blue:69/255. alpha:1.];
@@ -219,7 +260,7 @@ static SystemSoundID shake_sound_male_id = 0;
     [button2 setBackgroundImage:[UIImage imageNamed:@"downNormal.png"] forState:UIControlStateNormal];
     [button2 setBackgroundImage:[UIImage imageNamed:@"downSelcted.png"] forState:UIControlStateSelected];
     [button2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    button2.titleLabel.font = [UIFont fontWithName:@"Lato-Semibold" size:50];
+     button2.titleLabel.font = [UIFont fontWithName:@"Lato-Semibold" size:50];
     
     
     //创建出CAShapeLayer
@@ -285,61 +326,93 @@ static SystemSoundID shake_sound_male_id = 0;
     
     self.outTimeFlag = 4 ;
     
+    //cook
+    
+    self.showCookTimer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                     target:self
+                                                   selector:@selector(reloatTableview)
+                                                   userInfo:nil
+                                                    repeats:YES];
+    self.showCookTimer.fireDate = [NSDate distantFuture];
+    self.showCookFlag = 3;
+    
+    //amimal
+    
+    self.animalLeftTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                          target:self
+                                                        selector:@selector(animalLeftTableview)
+                                                        userInfo:nil
+                                                         repeats:YES];
+    self.animalLeftTimer.fireDate = [NSDate distantFuture];
+    
+    self.tableViewLeft = NO;
+    self.animalFlag = 3;
+    
+
+    
     self.doneTime = 6 ;
     
     self.countTime = 0;
     self.timeOne = 0;
     self.numberTime =0;
     
-    self.allStepArr = [NSArray arrayWithObjects:@"cut open the salmon skin, then tumbled into sauces A,then massage salmon, make sauce evenly onto the salmon",
-                       @"remove the salmon skin,Add 2 tbs vegetable oil into the pan",
-                       
-                       @"tumbled the salmon fillet into sauce A ",
-                       @"covered salmon evenly with prepared sauce & massage for 1min",
-                       @"stand salomn 3 minutes",
-                       @"Pour vegetable oil 2soup into pan",
-                       @"将3个鸡蛋打入碗内",
-                       @"用叉子快速搅拌持续30秒，使蛋白和蛋黄充分融合",
-                       @"将搅拌好的鸡蛋放到一边备用",
-                       nil];
-    
-    
-    //    @"Add 2 tbs vegetable oil into the pan",
-    //    @"Under the salmon skin into the pan, then press the salomn middle",
-    //    @"place the salmon into the pan skin-side-down",
-    //    @"then press the salmon in the middle",
-    self.imageDic = @{
-                      @"0":@"1.jpg",
-                      @"3":@"2.jpg",
-                      @"5":@"3.jpg",
-                      @"6":@"6.jpg",
-                      @"8":@"4.jpg",
-                      @"10":@"5.jpg",
-                      };
-    
-    self.timeDic = @{
-                     @"0":@"0",
-                     @"1":@"6",
-                     @"2":@"0",
-                     @"3":@"7",
-                     @"4":@"0",
-                     @"5":@"3",
-                     @"6":@"5",
-                     @"7":@"0",
-                     @"8":@"0",
-                     @"9":@"6",
-                     @"10":@"0",
-                     @"11":@"7",
-                     @"12":@"0",
-                     };
-    
+       
     self.index = 0 ;
     
-    
     [self initTableview];
-
+    
+    self.myTableView.alpha = 0.0;
+    self.imageView.alpha = 0.0;
+    button1.alpha = 0.0;
+    button2.alpha = 0.0;
+    button1.hidden = YES;
+    button2.hidden = YES;
 }
 
+
+-(void)animalLeftTableview
+{
+    if (self.animalFlag >0) {
+        self.animalFlag -- ;
+    }else{
+        self.animalLeftTimer.fireDate = [NSDate distantFuture];
+            //左移
+        [UIView animateWithDuration:0.5 animations:^{
+        self.myTableView.center = CGPointMake(self.myTableView.center.x-400,self.myTableView.center.y);
+        }];
+        self.tableViewLeft = YES;
+        self.animalFlag = 3;
+    }
+}
+
+
+-(void)animalRightTableView
+{
+    if (self.tableViewLeft) {
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            self.myTableView.center = CGPointMake(self.myTableView.center.x+400,self.myTableView.center.y);
+        }];
+        
+        self.tableViewLeft = NO;
+    }
+}
+
+
+-(void)reloatTableview
+{
+    if (self.showCookFlag > 0) {
+        self.showCookFlag --;
+    }else
+    {
+        [self.showCookTimer invalidate];
+        self.showCookTimer = nil;
+        
+        [self updatemyTableView];
+    }
+
+}
 
 -(void)finish
 {
@@ -359,7 +432,6 @@ static SystemSoundID shake_sound_male_id = 0;
         Normal_ViewController * normal = [[Normal_ViewController alloc] init];
         [self presentViewController:normal animated:YES completion:nil];
     }
-    
 
 }
 
@@ -372,7 +444,7 @@ static SystemSoundID shake_sound_male_id = 0;
         //停止定时器 停止写入数据
         self.timer.fireDate = [NSDate distantFuture];
 //        self.shapeLayer.hidden = YES;
-        //启动定时器 写入数据
+        //启动定时器
         self.timerOnetime.fireDate = [NSDate distantPast];
         
         self.shapeLayer.strokeStart = 0;
@@ -389,23 +461,28 @@ static SystemSoundID shake_sound_male_id = 0;
     }
 }
 
+/*
+ *初始化设置tablieView
+ */
+
 -(void)initTableview
 {
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor clearColor];
-    
     self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, Main_Screen_Width-150, 300)];
-    
     self.myTableView.dataSource = self;
     self.myTableView.delegate = self;
-    self.myTableView.userInteractionEnabled = NO;
-    
+    self.myTableView.alpha = 0.0;
     [self.myTableView setTableFooterView:view];
-    
     self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.myTableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.myTableView];
+    self.myTableView.scrollEnabled =NO; //设置tableview 不能滚动
 }
+
+/* 
+ *top button action
+ */
 
 - (void)leftAction:(id)sender {
     
@@ -415,9 +492,27 @@ static SystemSoundID shake_sound_male_id = 0;
     }
     self.flagShow = NO;
     
-    [self updatemyTableView];
+    if (self.tableViewLeft) {
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            self.myTableView.center = CGPointMake(self.myTableView.center.x+400,self.myTableView.center.y);
+        } completion:^(BOOL finished) {
+            
+            [self updatemyTableView];
+            
+        }];
+        
+        self.tableViewLeft = NO;
+    }else
+    {
+        [self updatemyTableView];
+    }
 }
 
+/*
+ *under button action
+ */
 
 - (void)nextAction:(id)sender {
     
@@ -439,8 +534,24 @@ static SystemSoundID shake_sound_male_id = 0;
                 self.flagIndex -- ;
             }
         }
+        self.animalLeftTimer.fireDate = [NSDate distantFuture];
+        self.animalFlag = 3;
+        if (self.tableViewLeft) {
+            
+            [UIView animateWithDuration:0.5 animations:^{
+                
+                self.myTableView.center = CGPointMake(self.myTableView.center.x+400,self.myTableView.center.y);
+            } completion:^(BOOL finished) {
+              [self updatemyTableView];
+                
+            }];
+            
+            self.tableViewLeft = NO;
+        }else
+        {
+            [self updatemyTableView];
+        }
         
-        [self updatemyTableView];
     }
 }
 
@@ -485,8 +596,10 @@ static SystemSoundID shake_sound_male_id = 0;
 
 
 - (void)updatemyTableView {
-    
-    
+
+    if (self.showCookFlag ==0) {
+        self.showCookFlag = -1;
+    }
     if ([[self.timeDic allKeys] containsObject:[NSString stringWithFormat:@"%ld",(long)self.index]] && self.flagShow) {
         
         NSInteger time = [[self.timeDic objectForKey:[NSString stringWithFormat:@"%ld",(long)self.index]] integerValue];
@@ -508,6 +621,12 @@ static SystemSoundID shake_sound_male_id = 0;
                 if (self.index == self.allStepArr.count -1) {
                     self.close = YES;
                     button1.hidden = YES;
+                }else if(self.index ==0)
+                {
+                    button1.hidden = YES;
+                }else
+                {
+                    button1.hidden = NO;
                 }
                 
                 [button2 setBackgroundImage:[UIImage imageNamed:@"done.png"] forState:UIControlStateNormal];
@@ -535,10 +654,17 @@ static SystemSoundID shake_sound_male_id = 0;
                 [button2 setTitle:[NSString stringWithFormat:@"FINISH"] forState:UIControlStateNormal];
                 self.outTimer.fireDate = [NSDate distantPast];
                 
+            }else if(self.index ==0)
+            {
+                button1.hidden = YES;
+            }else
+            {
+                button1.hidden = NO;
             }
         }
     }else
     {
+        
         
         if (self.index == self.allStepArr.count -1) {
             
@@ -549,10 +675,19 @@ static SystemSoundID shake_sound_male_id = 0;
             button2.titleLabel.font = [UIFont fontWithName:@"Lato-Light" size:32];
             
             [button2 setBackgroundImage:[UIImage imageNamed:@"done.png"] forState:UIControlStateNormal];
+            
             [button2 setBackgroundImage:[UIImage imageNamed:@"done.png"] forState:UIControlStateSelected];
+            
             [button2 setTitle:[NSString stringWithFormat:@"FINISH"] forState:UIControlStateNormal];
+            
             self.outTimer.fireDate = [NSDate distantPast];
             
+        }else if(self.index ==0)
+        {
+            button1.hidden = YES;
+        }else
+        {
+            button1.hidden = NO;
         }
     }
 
@@ -567,7 +702,6 @@ static SystemSoundID shake_sound_male_id = 0;
     
     return self.allStepArr.count;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"LRCCell";
@@ -586,87 +720,67 @@ static SystemSoundID shake_sound_male_id = 0;
     
     
     NSString * str = [self.allStepArr objectAtIndex:indexPath.row] ;
- 
-    CGSize size = CGSizeMake(Main_Screen_Width-175,2000);
-    
-    CGSize labelsize = [str sizeWithFont:[UIFont fontWithName:@"Lato-Semibold" size:32] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
 
-    UILabel *  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 5, Main_Screen_Width-180, labelsize.height >145?145:labelsize.height)];
+    UILabel *  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 5, Main_Screen_Width-180, 145)];
     
-    titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+    titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
     
     titleLabel.numberOfLines = 0;
     titleLabel.text = str;
-    
-//    NSMutableAttributedString * attributedString1 = [[NSMutableAttributedString alloc] initWithString:str];
-//    
-//    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
-//    
-//    [paragraphStyle1 setLineSpacing:1.0];
-//    
-//    [attributedString1 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, [str length])];
-//    
-//    [titleLabel setAttributedText:attributedString1];
-//    //设置行间距后适配高度显示
-//    [titleLabel sizeToFit];
-//
+
     [cell.contentView addSubview:titleLabel];
   
+    cell.backgroundColor = [UIColor colorWithRed:(52/255.0)green:(48/255.0)  blue:(48/255.0) alpha:.5];
     
     BOOL bl = [self IsChinese:str];
     
     if (indexPath.row == self.index) {
-        
+
         if (bl) {
             
            titleLabel.font = [UIFont fontWithName:@"FZLTHK--GBK1-0" size:32];
-          
-            CGSize size = CGSizeMake(Main_Screen_Width-180,2000);
-            CGSize labelsize = [str sizeWithFont:[UIFont fontWithName:@"FZLTHK--GBK1-0" size:32] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
-            
-            titleLabel.frame =CGRectMake(15, 5, Main_Screen_Width-180, labelsize.height >145?145:labelsize.height);
             
         }else{
             
             titleLabel.font = [UIFont fontWithName:@"Lato-Semibold" size:36];
-
-            CGSize size = CGSizeMake(Main_Screen_Width-180,2000);
-            CGSize labelsize = [str sizeWithFont:[UIFont fontWithName:@"Lato-Semibold" size:36] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
-            
-            titleLabel.frame =CGRectMake(15, 5, Main_Screen_Width-180, labelsize.height >145?145:labelsize.height);
         }
         
         titleLabel.textColor = [UIColor colorWithRed:229/255. green:229/255. blue:230/255. alpha:1.];
         
     }else
     {
-    
-        if (bl) {
+        if (self.showCookFlag !=-1 && self.showCookFlag !=5) {
             
-            titleLabel.font = [UIFont fontWithName:@"FZLTXHK" size:32];
-            CGSize size = CGSizeMake(Main_Screen_Width-180,2000);
-            CGSize labelsize = [str sizeWithFont:[UIFont fontWithName:@"FZLTXHK" size:32] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
-            
-            titleLabel.frame =CGRectMake(15, 5, Main_Screen_Width-180, labelsize.height >145?145:labelsize.height);
+            titleLabel.text = @"";
+            cell.backgroundColor = [UIColor clearColor];
             
         }else{
             
-            titleLabel.font = [UIFont fontWithName:@"Lato-Light" size:32];
-            CGSize size = CGSizeMake(Main_Screen_Width-180,2000);
-            CGSize labelsize = [str sizeWithFont:[UIFont fontWithName:@"Lato-Light" size:32] constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
-            
-            titleLabel.frame =CGRectMake(15, 5, Main_Screen_Width-180, labelsize.height >145?145:labelsize.height);
+            self.showCookFlag = 5;
+           
+            if (bl) {
+                
+                titleLabel.font = [UIFont fontWithName:@"FZLTXHK" size:32];
+                
+            }else{
+                
+                titleLabel.font = [UIFont fontWithName:@"Lato-Light" size:32];
+            }
+
+            titleLabel.textColor = [UIColor colorWithRed:229/255. green:229/255. blue:230/255. alpha:0.5];
         }
         
-        titleLabel.textColor = [UIColor colorWithRed:229/255. green:229/255. blue:230/255. alpha:0.5];
-        
     }
-    
+
     if ([[self.imageDic allKeys] containsObject:[NSString stringWithFormat:@"%ld",self.index]]) {
         
-        cell.backgroundColor = [UIColor colorWithRed:(52/255.0)green:(48/255.0)  blue:(48/255.0) alpha:.5];
-        
         self.imageView.image = [UIImage imageNamed:[self.imageDic objectForKey:[NSString stringWithFormat:@"%ld",self.index]]];
+        
+        if (self.showCookFlag ==5){
+            
+            self.animalLeftTimer.fireDate = [NSDate distantPast];
+            self.animalFlag = 3;
+        }
         
     }else
     {
@@ -674,7 +788,6 @@ static SystemSoundID shake_sound_male_id = 0;
         cell.backgroundColor = [UIColor clearColor];
     }
 
-    
     return cell;
 }
 
@@ -684,20 +797,26 @@ static SystemSoundID shake_sound_male_id = 0;
     return 150;
 }
 
--(void) playSound
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self animalRightTableView];
+}
+
+
+-(void) playSound
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"music" ofType:@"mp3"];
     if (path) {
         //注册声音到系统
         AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path],&shake_sound_male_id);
         AudioServicesPlaySystemSound(shake_sound_male_id);
-        //        AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
+        // AudioServicesPlaySystemSound(shake_sound_male_id);//如果无法再下面播放，可以尝试在此播放
     }
     
     AudioServicesPlaySystemSound(shake_sound_male_id);   //播放注册的声音，（此句代码，可以在本类中的任意位置调用，不限于本方法中）
     
-    //    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);   //让手机震动
+    //AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);   //让手机震动
 }
 
 

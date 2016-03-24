@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		90106E061CA3EF0B009ED514 /* DataDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = 90106E051CA3EF0B009ED514 /* DataDoc.m */; };
 		9028B45F1C993BC300FB79E9 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9028B44C1C993BC300FB79E9 /* Lato-Light.ttf */; };
 		9028B4611C993BC300FB79E9 /* Lato-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9028B44E1C993BC300FB79E9 /* Lato-Medium.ttf */; };
 		9028B4641C993BC300FB79E9 /* Lato-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9028B4511C993BC300FB79E9 /* Lato-Semibold.ttf */; };
@@ -16,7 +17,6 @@
 		9028B46D1C99462C00FB79E9 /* FZLTHK.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9028B46B1C99462C00FB79E9 /* FZLTHK.TTF */; };
 		9028B46E1C99462C00FB79E9 /* FZLTXHK.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9028B46C1C99462C00FB79E9 /* FZLTXHK.TTF */; };
 		90BB039B1C914ECF009D0CBD /* CookingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90BB03991C914ECF009D0CBD /* CookingViewController.xib */; };
-		90BB039E1C915E1A009D0CBD /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90BB039D1C915E1A009D0CBD /* FirstViewController.m */; };
 		90BB03DD1C9174D2009D0CBD /* EncodeSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90BB03AF1C9174D2009D0CBD /* EncodeSans-Medium.ttf */; };
 		90BB03DE1C9174D2009D0CBD /* EncodeSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90BB03B01C9174D2009D0CBD /* EncodeSans-Regular.ttf */; };
 		90BB040C1C917DA8009D0CBD /* 1@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 90BB04061C917DA8009D0CBD /* 1@2x.jpg */; };
@@ -70,6 +70,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		90106E041CA3EF0B009ED514 /* DataDoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDoc.h; sourceTree = "<group>"; };
+		90106E051CA3EF0B009ED514 /* DataDoc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDoc.m; sourceTree = "<group>"; };
 		9028B44C1C993BC300FB79E9 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		9028B44E1C993BC300FB79E9 /* Lato-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Medium.ttf"; sourceTree = "<group>"; };
 		9028B4511C993BC300FB79E9 /* Lato-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Semibold.ttf"; sourceTree = "<group>"; };
@@ -80,8 +82,6 @@
 		9028B46C1C99462C00FB79E9 /* FZLTXHK.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = FZLTXHK.TTF; sourceTree = "<group>"; };
 		90BB03971C914ECF009D0CBD /* CookingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CookingViewController.h; path = Simulation/CookingViewController.h; sourceTree = "<group>"; };
 		90BB03991C914ECF009D0CBD /* CookingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CookingViewController.xib; sourceTree = "<group>"; };
-		90BB039C1C915E1A009D0CBD /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		90BB039D1C915E1A009D0CBD /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		90BB03AF1C9174D2009D0CBD /* EncodeSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EncodeSans-Medium.ttf"; sourceTree = "<group>"; };
 		90BB03B01C9174D2009D0CBD /* EncodeSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EncodeSans-Regular.ttf"; sourceTree = "<group>"; };
 		90BB04061C917DA8009D0CBD /* 1@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "1@2x.jpg"; sourceTree = "<group>"; };
@@ -183,8 +183,8 @@
 			children = (
 				D2FAFECB1C97DA8C0042FBD0 /* AudioToolbox.framework */,
 				D27299481C94601900DEEF6C /* AVFoundation.framework */,
-				90BB039C1C915E1A009D0CBD /* FirstViewController.h */,
-				90BB039D1C915E1A009D0CBD /* FirstViewController.m */,
+				90106E041CA3EF0B009ED514 /* DataDoc.h */,
+				90106E051CA3EF0B009ED514 /* DataDoc.m */,
 				90BB03971C914ECF009D0CBD /* CookingViewController.h */,
 				9028B4691C993C3100FB79E9 /* CookingViewController.m */,
 				D2FAFEC61C97B9630042FBD0 /* Normal_ViewController.h */,
@@ -442,9 +442,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				90C49AF31C8E75CA00AAF3FA /* SJAvatarBrowser.m in Sources */,
-				90BB039E1C915E1A009D0CBD /* FirstViewController.m in Sources */,
 				9028B46A1C993C3100FB79E9 /* CookingViewController.m in Sources */,
 				90CF0FAF1C7EA2780055DC0E /* ViewController.m in Sources */,
+				90106E061CA3EF0B009ED514 /* DataDoc.m in Sources */,
 				90CF0FAC1C7EA2780055DC0E /* AppDelegate.m in Sources */,
 				D2FAFEC91C97B9630042FBD0 /* Normal_ViewController.m in Sources */,
 				90CF0FA91C7EA2780055DC0E /* main.m in Sources */,
