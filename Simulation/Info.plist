@@ -28,6 +28,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Lato-Medium.ttf</string>
 		<string>Lato-Thin.ttf</string>
 		<string>Lato-Semibold.ttf</string>
 		<string>Lato-Light.ttf</string>

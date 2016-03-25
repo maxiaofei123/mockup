@@ -15,7 +15,6 @@
     self  = [super init];
     if (self) {
         self.allStepArr = [NSArray arrayWithObjects:
-                           @"Seared Salmon",
                            @"cut open the salmon skin, then tumbled into sauces A,then massage salmon, make sauce evenly onto the salmon",
                            @"remove the salmon skin,Add 2 tbs vegetable oil into the pan",
                            

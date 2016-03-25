@@ -217,7 +217,6 @@ static CGRect oldframe;
 }
 
 - (IBAction)nextAction:(id)sender {
-    
     self.showSection = NO;
     
     if (self.index < 6) {
