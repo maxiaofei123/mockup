@@ -11,7 +11,6 @@
 #import "AppDelegate.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "DataDoc.h"
-#import "MDRadialProgressView.h"
 
 static SystemSoundID shake_sound_male_id = 0;
 
@@ -26,7 +25,6 @@ static SystemSoundID shake_sound_male_id = 0;
 
 @property (nonatomic, strong) CAShapeLayer *shapeLayer;
 @property (nonatomic, strong) DataDoc * dataDoc;
-@property (nonatomic ,strong) MDRadialProgressView *radialView;
 
 @property(nonatomic,strong)UILabel * label1;
 @property(nonatomic,strong)UILabel * label2;
@@ -43,7 +41,7 @@ static SystemSoundID shake_sound_male_id = 0;
 @property(nonatomic,assign)BOOL close;
 
 @property (strong, nonatomic) UITableView *myTableView;
-@property (strong ,nonatomic) UIView * dishView;
+@property (strong ,nonatomic) UILabel * dishLableTitle;
 
 @property (strong ,nonatomic) NSTimer * timer;
 @property (nonatomic ,assign) NSInteger  countTime;
@@ -73,6 +71,7 @@ static SystemSoundID shake_sound_male_id = 0;
 
 @synthesize imageView;
 @synthesize label1,label2,button1,button2;
+@synthesize dishLableTitle;
 
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -159,49 +158,50 @@ static SystemSoundID shake_sound_male_id = 0;
 
 -(void)drawDishView
 {
-    self.dishView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, widthNormal, heightNormal)];
-    self.dishView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:self.dishView];
+    dishLableTitle = [[UILabel alloc] initWithFrame:CGRectMake(30, 47.5, widthNormal-250, 120)];
+    dishLableTitle.text = @"Seared Salmon";
+    dishLableTitle.textColor = [UIColor colorWithRed:229/255. green:229/255. blue:230/255. alpha:1.];
+    dishLableTitle.font = [UIFont fontWithName:@"EncodeSans-Medium" size:36];
     
-    UILabel * lableTitle = [[UILabel alloc] initWithFrame:CGRectMake(30, 47.5, widthNormal-250, 120)];
-    lableTitle.text = @"Seared Salmon";
-    lableTitle.textAlignment = NSTextAlignmentCenter;
-    lableTitle.textColor = [UIColor colorWithRed:229/255. green:229/255. blue:230/255. alpha:1.];
-    lableTitle.font = [UIFont fontWithName:@"EncodeSans-Medium" size:36];
-    
-    [self.dishView addSubview:lableTitle];
+    [self.imageView addSubview:dishLableTitle];
     
     //文字加描边
-    lableTitle.layer.shadowColor = [UIColor colorWithRed:50/255. green:58/255. blue:69/255. alpha:1.].CGColor;
-    lableTitle.layer.shadowOffset = CGSizeMake(3,2);
-    lableTitle.layer.shadowOpacity = 0.8;
+    dishLableTitle.layer.shadowColor = [UIColor colorWithRed:50/255. green:58/255. blue:69/255. alpha:1.].CGColor;
+    dishLableTitle.layer.shadowOffset = CGSizeMake(3,2);
+    dishLableTitle.layer.shadowOpacity = 0.8;
     
-    self.dishView.alpha = 0;
+    dishLableTitle.alpha = 0;
 
 }
 
 -(void)viewOut
 {
-    [UIView beginAnimations:nil context:nil];
     
-    [UIView setAnimationDuration:2.0f];
     
-    [UIView setAnimationDelegate:self];
+    Normal_ViewController * normal = [[Normal_ViewController alloc] init];
+    [self presentViewController:normal animated:YES completion:nil];
     
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    
-    [UIView setAnimationDidStopSelector:@selector(dishViewChange)];
-    
-    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
-    
-    self.viewOne.alpha = 0.0f;
-    
-    [UIView commitAnimations];
+//    [UIView beginAnimations:nil context:nil];
+//    
+//    [UIView setAnimationDuration:2.0f];
+//    
+//    [UIView setAnimationDelegate:self];
+//    
+//    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+//    
+//    [UIView setAnimationDidStopSelector:@selector(dishViewChange)];
+//    
+//    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
+//    
+//    self.viewOne.alpha = 0.0f;
+//    
+//    [UIView commitAnimations];
 }
 
 -(void)dishViewChange
 {
     [self.viewOne removeFromSuperview];
+    
     [UIView beginAnimations:nil context:nil];
     
     [UIView setAnimationDuration:1.0f];
@@ -209,7 +209,8 @@ static SystemSoundID shake_sound_male_id = 0;
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     
     [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
-    self.dishView.alpha = 1;
+    
+    dishLableTitle.alpha = 1;
     button1.alpha = 1.0;
     button2.alpha = 1.0;
     [UIView commitAnimations];
@@ -230,13 +231,14 @@ static SystemSoundID shake_sound_male_id = 0;
     
     [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
     
-    self.dishView.alpha = 0.0f;
+    dishLableTitle.alpha = 0.0f;
     [UIView commitAnimations];
+    
 }
 
 - (void)yourChange
 {
-    [self.dishView removeFromSuperview];
+    [dishLableTitle removeFromSuperview];
     
     [UIView beginAnimations:nil context:nil];
     
@@ -311,6 +313,7 @@ static SystemSoundID shake_sound_male_id = 0;
     
     button1 = [[UIButton alloc] initWithFrame:CGRectMake(widthNormal-140, 47.5, 120, 120)];
     [imageView addSubview:button1];
+    [imageView bringSubviewToFront:button1];
     
     [button1 setBackgroundImage:[UIImage imageNamed:@"btn-blank-240x240-21.png"] forState:UIControlStateNormal];
     [button1 setBackgroundImage:[UIImage imageNamed:@"btn-blank-240x240-21.png"] forState:UIControlStateSelected];
@@ -324,6 +327,7 @@ static SystemSoundID shake_sound_male_id = 0;
     button2 = [[UIButton alloc] initWithFrame:CGRectMake(widthNormal-140, 120+47.5+40, 120, 120)];
     [button2 addTarget:self action:@selector(nextAction:) forControlEvents:UIControlEventTouchUpInside];
     [imageView addSubview:button2];
+    [imageView bringSubviewToFront:button2];
     
     [button2 setBackgroundImage:[UIImage imageNamed:@"btn-blank-240x240-21.png"] forState:UIControlStateNormal];
     [button2 setBackgroundImage:[UIImage imageNamed:@"btn-blank-240x240-21.png"] forState:UIControlStateSelected];
@@ -479,7 +483,13 @@ static SystemSoundID shake_sound_male_id = 0;
         //dishView  out
         
         [self dishViewOut];
+        
+        [button2 setBackgroundImage:[UIImage imageNamed:@"btn-NEXT-240x240-21.png"] forState:UIControlStateNormal];
+        [button2 setBackgroundImage:[UIImage imageNamed:@"btn-NEXT-240x240-21.png"] forState:UIControlStateSelected];
+        [button2 setTitle:@"" forState:UIControlStateNormal];
+        
     }else {
+        
         if (self.close) {
             
             button2.enabled = NO ;

@@ -12,7 +12,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *back;
 @property (weak, nonatomic) IBOutlet UIButton *next;
 @property (weak, nonatomic) IBOutlet UIButton *add;
+
 @property (weak, nonatomic) IBOutlet UIButton *subtract;
+
 @property (weak, nonatomic) IBOutlet UILabel *timeMinuteTensLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeMinuteLabel;
 
@@ -25,8 +27,14 @@
 - (IBAction)nextAction:(id)sender;
 - (IBAction)subtractAction:(id)sender;
 - (IBAction)addAction:(id)sender;
+
+
 @property (weak, nonatomic) IBOutlet UIView *secondView;
 
 @property (weak, nonatomic) IBOutlet UIView *minutesView;
+
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
+
+@property (weak, nonatomic) IBOutlet UIView *timeView;
 
 @end
