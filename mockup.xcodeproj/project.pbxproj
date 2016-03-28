@@ -16,6 +16,7 @@
 		9028B46A1C993C3100FB79E9 /* CookingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9028B4691C993C3100FB79E9 /* CookingViewController.m */; };
 		9028B46D1C99462C00FB79E9 /* FZLTHK.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9028B46B1C99462C00FB79E9 /* FZLTHK.TTF */; };
 		9028B46E1C99462C00FB79E9 /* FZLTXHK.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 9028B46C1C99462C00FB79E9 /* FZLTXHK.TTF */; };
+		902CC4711CA9354200077C39 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 902CC4701CA9354200077C39 /* Lato-Regular.ttf */; };
 		90BB039B1C914ECF009D0CBD /* CookingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90BB03991C914ECF009D0CBD /* CookingViewController.xib */; };
 		90BB03DD1C9174D2009D0CBD /* EncodeSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90BB03AF1C9174D2009D0CBD /* EncodeSans-Medium.ttf */; };
 		90BB03DE1C9174D2009D0CBD /* EncodeSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90BB03B01C9174D2009D0CBD /* EncodeSans-Regular.ttf */; };
@@ -82,6 +83,7 @@
 		9028B4691C993C3100FB79E9 /* CookingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CookingViewController.m; sourceTree = "<group>"; };
 		9028B46B1C99462C00FB79E9 /* FZLTHK.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = FZLTHK.TTF; sourceTree = "<group>"; };
 		9028B46C1C99462C00FB79E9 /* FZLTXHK.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = FZLTXHK.TTF; sourceTree = "<group>"; };
+		902CC4701CA9354200077C39 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		90BB03971C914ECF009D0CBD /* CookingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CookingViewController.h; path = Simulation/CookingViewController.h; sourceTree = "<group>"; };
 		90BB03991C914ECF009D0CBD /* CookingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CookingViewController.xib; sourceTree = "<group>"; };
 		90BB03AF1C9174D2009D0CBD /* EncodeSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EncodeSans-Medium.ttf"; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 		9028B4421C993BC300FB79E9 /* lato */ = {
 			isa = PBXGroup;
 			children = (
+				902CC4701CA9354200077C39 /* Lato-Regular.ttf */,
 				9028B44C1C993BC300FB79E9 /* Lato-Light.ttf */,
 				9028B44E1C993BC300FB79E9 /* Lato-Medium.ttf */,
 				9028B4511C993BC300FB79E9 /* Lato-Semibold.ttf */,
@@ -404,6 +407,7 @@
 				90BB040D1C917DA8009D0CBD /* 2@2x.jpg in Resources */,
 				D2F34F641CA436B50039337A /* btn-PREVIOUS-240x240-22.png in Resources */,
 				90EDBEB01CA4F2E700B9CAB5 /* add@2x.png in Resources */,
+				902CC4711CA9354200077C39 /* Lato-Regular.ttf in Resources */,
 				D2FAFECA1C97B9630042FBD0 /* Normal_ViewController.xib in Resources */,
 				90BB040E1C917DA8009D0CBD /* 3@2x.jpg in Resources */,
 				D2FAFECE1C97DB120042FBD0 /* music.mp3 in Resources */,
