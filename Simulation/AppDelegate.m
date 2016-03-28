@@ -14,7 +14,8 @@
 
 
 @interface AppDelegate ()
-
+@property(nonatomic,strong) NSTimer * showTimeTimer;
+@property(nonatomic,strong) UILabel * showTimeLable;
 @end
 
 @implementation AppDelegate
@@ -25,7 +26,7 @@
     [NSThread sleepForTimeInterval:2.0];
     self.window.backgroundColor = [UIColor colorWithRed:39/255. green:44/255. blue:54/255. alpha:1.];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-
+    
     [self.window makeKeyAndVisible];
     // Override point for customization after application launch.
     return YES;

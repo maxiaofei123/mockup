@@ -16,6 +16,10 @@
 @property (nonatomic, strong) CLDashboardProgressView *timeProgress;
 @property (nonatomic, strong) CLDashboardProgressView *powerProgress;
 
+@property(nonatomic,strong) NSTimer * showTimeTimer;
+@property(nonatomic,strong) UILabel * showTimeLable;
+
+
 @property(nonatomic,assign)NSInteger  secondTime;
 @property(nonatomic,assign)NSInteger minuteTime;
 
@@ -29,6 +33,14 @@
 
 @synthesize back,add,subtract,next;
 @synthesize timeProgress,powerProgress;
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    
+    [self.showTimeTimer invalidate];
+    self.showTimeTimer = nil;
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -114,6 +126,18 @@
     [self.backgroundView bringSubviewToFront:add];
     [self.backgroundView bringSubviewToFront:subtract];
     [self.backgroundView bringSubviewToFront:self.timeView];
+    
+    self.showTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, widthNormal, 16)];
+    [self.view addSubview:self.showTimeLable];
+    [self.view bringSubviewToFront:self.showTimeLable];
+    self.showTimeLable.textAlignment = NSTextAlignmentCenter;
+    self.showTimeLable.text = @"   ";
+    self.showTimeLable.textColor = [UIColor whiteColor];
+    self.showTimeLable.textColor = [UIColor colorWithRed:229/255. green:229/255. blue:230/255. alpha:0.5];
+    self.showTimeLable.font = [UIFont fontWithName:@"Lato-Medium" size:16];
+    [self updateTimeLabel];
+    
+    self.showTimeTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0) target:self selector:@selector(updateTimeLabel) userInfo:nil repeats:YES];
 }
 
 /*
@@ -142,15 +166,14 @@
 
 -(void)selecteViewMinute
 {
-
     self.selectTens = YES;
+    [self setMinutesDail];
 }
 
 -(void)selectViewSecond
 {
-    
     self.selectTens = NO;
-    
+    [self setSecondDail];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -160,7 +183,6 @@
 
 -(void)reviewLabel
 {
-
     self.powerLabel.text = [NSString stringWithFormat:@"%ld",self.power];
     
     //minutes
@@ -219,12 +241,16 @@
             
             self.minuteTime --;
         }
+         timeProgress.currentValue = self.minuteTime;
+       
     }else
     {
         if (self.secondTime > 0) {
             
             self.secondTime --;
         }
+       
+        timeProgress.currentValue = self.secondTime;
     
     }
     
@@ -236,10 +262,12 @@
     
     if (self.selectTens) {
         
-        if (self.minuteTime < 59) {
+        if (self.minuteTime < 12) {
             
             self.minuteTime ++;
         }
+        
+         timeProgress.currentValue = self.minuteTime;
     }else
     {
         if (self.secondTime < 59) {
@@ -248,14 +276,33 @@
             
         }else if(self.secondTime == 59)
         {
-            if (self.minuteTime < 59) {
+            if (self.minuteTime < 12) {
                self.minuteTime ++ ;
                 self.secondTime = 0;
             }
         }
+        
+        timeProgress.currentValue = self.secondTime;
     }
     
      [self reviewLabel];
 
 }
+
+
+
+-(void)updateTimeLabel {
+    
+    NSDate *  senddate=[NSDate date];
+    
+    NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
+    
+    [dateformatter setDateFormat:@"HH:mm"];
+    
+    NSString *  locationString=[dateformatter stringFromDate:senddate];
+    
+    self.showTimeLable.text = locationString;
+}
+
+
 @end

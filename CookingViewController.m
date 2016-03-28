@@ -52,6 +52,9 @@ static SystemSoundID shake_sound_male_id = 0;
 @property (nonatomic ,assign) NSInteger  timeOne;
 @property (nonatomic ,assign) NSInteger  numberTime;
 
+@property(nonatomic,strong) NSTimer * showTimeTimer;
+@property(nonatomic,strong) UILabel * showTimeLable;
+
 @property (nonatomic ,strong) NSTimer * outTimer;
 
 @property (nonatomic ,assign) BOOL flagShow;
@@ -88,6 +91,9 @@ static SystemSoundID shake_sound_male_id = 0;
     
     [self.doneTimer invalidate];
     self.doneTimer = nil;
+    
+    [self.showTimeTimer invalidate];
+    self.showTimeTimer = nil;
     
 }
 
@@ -137,23 +143,20 @@ static SystemSoundID shake_sound_male_id = 0;
     [self.viewOne addGestureRecognizer:singleTap];
     
     
-    UILabel * lableTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 55, widthNormal, 50)];
-    lableTitle.text = @"A.Kitchen";
-    lableTitle.textAlignment = NSTextAlignmentCenter;
-    lableTitle.textColor = [UIColor colorWithRed:195/255. green:196/255. blue:199/255. alpha:1.];
-    lableTitle.font = [UIFont fontWithName:@"EncodeSans-Medium" size:40];
-    [self.viewOne addSubview:lableTitle];
+    UIImageView * logoImage = [[UIImageView alloc] initWithFrame:CGRectMake((widthNormal-66)/2, 55, 66, 66)];
+    logoImage.image = [UIImage imageNamed:@"logo.png"];
+    [self.viewOne addSubview:logoImage];
     
-    UILabel * lableContent = [[UILabel alloc] initWithFrame:CGRectMake((widthNormal-500)/2, 130, 500,200)];
     
-    lableContent.textColor = [UIColor colorWithRed:117/255. green:122/255. blue:129/255. alpha:1.];
-    lableContent.font = [UIFont fontWithName:@"Lato-Light" size:32];
-    lableContent.text = @"Sent when the application is about  move from active to inactive state. This can  for certain types of temporary interruptions such as an incoming phone call or SMS message) or when the user quits the user quits the application and it begins the transition to the background state.";
-    
+    UILabel * lableContent = [[UILabel alloc] initWithFrame:CGRectMake((widthNormal-500)/2, 170, 500,120)];
+    lableContent.textColor = [UIColor colorWithRed:136/255. green:141/255. blue:146/255. alpha:1.];
+    lableContent.font = [UIFont fontWithName:@"Lato-Light" size:28];
+    lableContent.text = @"Lorem Ipsum is simply dummy text of the printing and typsetting industry.  Lorem Ipsum has been the industry' s standard.";
     lableContent.lineBreakMode = NSLineBreakByCharWrapping;
     lableContent.numberOfLines = 0;
     
     [self.viewOne addSubview:lableContent];
+    
 }
 
 -(void)drawDishView
@@ -177,25 +180,24 @@ static SystemSoundID shake_sound_male_id = 0;
 -(void)viewOut
 {
     
+//    Normal_ViewController * normal = [[Normal_ViewController alloc] init];
+//    [self presentViewController:normal animated:YES completion:nil];
+//    
+    [UIView beginAnimations:nil context:nil];
     
-    Normal_ViewController * normal = [[Normal_ViewController alloc] init];
-    [self presentViewController:normal animated:YES completion:nil];
+    [UIView setAnimationDuration:2.0f];
     
-//    [UIView beginAnimations:nil context:nil];
-//    
-//    [UIView setAnimationDuration:2.0f];
-//    
-//    [UIView setAnimationDelegate:self];
-//    
-//    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-//    
-//    [UIView setAnimationDidStopSelector:@selector(dishViewChange)];
-//    
-//    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
-//    
-//    self.viewOne.alpha = 0.0f;
-//    
-//    [UIView commitAnimations];
+    [UIView setAnimationDelegate:self];
+    
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    
+    [UIView setAnimationDidStopSelector:@selector(dishViewChange)];
+    
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:self.view cache:YES];
+    
+    self.viewOne.alpha = 0.0f;
+    
+    [UIView commitAnimations];
 }
 
 -(void)dishViewChange
@@ -310,6 +312,21 @@ static SystemSoundID shake_sound_male_id = 0;
     [self.view addSubview:imageView];
     
     self.close = NO;
+
+    self.showTimeLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, widthNormal, 16)];
+    [self.view addSubview:self.showTimeLable];
+    [self.view bringSubviewToFront:self.showTimeLable];
+    self.showTimeLable.textAlignment = NSTextAlignmentCenter;
+    self.showTimeLable.text = @"   ";
+    self.showTimeLable.textColor = [UIColor colorWithRed:229/255. green:229/255. blue:230/255. alpha:0.5];
+    self.showTimeLable.font = [UIFont fontWithName:@"Lato-Medium" size:16];
+    
+    [self updateTimeLabel];
+    
+    self.showTimeTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0) target:self selector:@selector(updateTimeLabel) userInfo:nil repeats:YES];
+    
+    
+    //按钮
     
     button1 = [[UIButton alloc] initWithFrame:CGRectMake(widthNormal-140, 47.5, 120, 120)];
     [imageView addSubview:button1];
@@ -338,14 +355,14 @@ static SystemSoundID shake_sound_male_id = 0;
     button2.alpha = 0;
     
     //创建出CAShapeLayer
-    float r = 100 ;
+    float r = 110 ;
     self.shapeLayer = [CAShapeLayer layer];
-    self.shapeLayer.frame = CGRectMake(10,10, r, r);//设置shapeLayer的尺寸和位置
+    self.shapeLayer.frame = CGRectMake(5,5, r, r);//设置shapeLayer的尺寸和位置
     self.shapeLayer.fillColor = [UIColor clearColor].CGColor;//填充颜色为ClearColor
     
     //设置线条的宽度和颜色
     self.shapeLayer.lineWidth = 5.0f;
-    self.shapeLayer.strokeColor = [UIColor colorWithRed:255/255. green:255/255. blue:255/255. alpha:1.].CGColor;
+    self.shapeLayer.strokeColor = [UIColor colorWithRed:229/255. green:229/255. blue:230/255. alpha:1.].CGColor;
     
     //创建出圆形贝塞尔曲线
     UIBezierPath *circlePath =  [UIBezierPath bezierPathWithArcCenter:CGPointMake(r / 2.f, r / 2.f)
@@ -403,8 +420,22 @@ static SystemSoundID shake_sound_male_id = 0;
     [self initTableview];
     
     self.myTableView.alpha = 0.0;
-    
 }
+
+
+-(void)updateTimeLabel {
+    
+    NSDate *  senddate=[NSDate date];
+    
+    NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
+    
+    [dateformatter setDateFormat:@"HH:mm"];
+    
+    NSString *  locationString=[dateformatter stringFromDate:senddate];
+    
+    self.showTimeLable.text = locationString;
+}
+
 
 -(void)finish
 {
@@ -529,9 +560,7 @@ static SystemSoundID shake_sound_male_id = 0;
         self.button1.enabled = YES;
         
         if (self.index == _dataDoc.allStepArr.count -1) {
-            
-            button2.titleLabel.font = [UIFont fontWithName:@"Lato-Light" size:32];
-            
+
             [button2 setBackgroundImage:[UIImage imageNamed:@"btn-blank-240x240-21.png"] forState:UIControlStateNormal];
             [button2 setBackgroundImage:[UIImage imageNamed:@"btn-blank-240x240-21.png"] forState:UIControlStateSelected];
             [button2 setTitle:[NSString stringWithFormat:@"FINISH"] forState:UIControlStateNormal];
@@ -601,9 +630,7 @@ static SystemSoundID shake_sound_male_id = 0;
             if (self.index == _dataDoc.allStepArr.count -1) {
                 
                 self.close = YES;
-                
-                button2.titleLabel.font = [UIFont fontWithName:@"Lato-Light" size:32];
-                
+
                 [button2 setBackgroundImage:[UIImage imageNamed:@"btn-blank-240x240-21.png"] forState:UIControlStateNormal];
                 [button2 setBackgroundImage:[UIImage imageNamed:@"btn-blank-240x240-21.png"] forState:UIControlStateSelected];
                 [button2 setTitle:[NSString stringWithFormat:@"FINISH"] forState:UIControlStateNormal];
@@ -624,8 +651,6 @@ static SystemSoundID shake_sound_male_id = 0;
             
             self.close = YES;
 
-            button2.titleLabel.font = [UIFont fontWithName:@"Lato-Light" size:32];
-            
             [button2 setBackgroundImage:[UIImage imageNamed:@"btn-blank-240x240-21.png"] forState:UIControlStateNormal];
             
             [button2 setBackgroundImage:[UIImage imageNamed:@"btn-blank-240x240-21.png"] forState:UIControlStateSelected];
@@ -673,14 +698,16 @@ static SystemSoundID shake_sound_male_id = 0;
     NSString * str = [_dataDoc.allStepArr objectAtIndex:indexPath.section] ;
 
     UILabel *  titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 0, widthNormal-250, 120)];
-    
     titleLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    
     titleLabel.numberOfLines = 0;
     titleLabel.text = str;
-
+    
+    //文字加描边
+    titleLabel.layer.shadowColor = [UIColor colorWithRed:50/255. green:58/255. blue:69/255. alpha:0.77].CGColor;
+    titleLabel.layer.shadowOffset = CGSizeMake(3,2);
+    titleLabel.layer.shadowOpacity = 2;
     [cell.contentView addSubview:titleLabel];
-  
+    
     cell.backgroundColor = [UIColor clearColor];
     
     BOOL bl = [self IsChinese:str];
@@ -695,11 +722,6 @@ static SystemSoundID shake_sound_male_id = 0;
             
             titleLabel.font = [UIFont fontWithName:@"Lato-Semibold" size:36];
         }
-//        文字加描边
-        titleLabel.layer.shadowColor = [UIColor colorWithRed:50/255. green:58/255. blue:69/255. alpha:1.].CGColor;
-        titleLabel.layer.shadowOffset = CGSizeMake(3,2);
-        titleLabel.layer.shadowOpacity = 0.8;
-
         titleLabel.textColor = [UIColor colorWithRed:229/255. green:229/255. blue:230/255. alpha:1.];
         
     }else
@@ -719,7 +741,6 @@ static SystemSoundID shake_sound_male_id = 0;
     if ([[_dataDoc.imageDic allKeys] containsObject:[NSString stringWithFormat:@"%ld",self.index]]) {
         
         self.imageView.image = [UIImage imageNamed:[_dataDoc.imageDic objectForKey:[NSString stringWithFormat:@"%ld",self.index]]];
-        
     }else
     {
         self.imageView.image = nil;

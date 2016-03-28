@@ -40,6 +40,7 @@
 		90EDBEAC1CA4E44000B9CAB5 /* CLDashboardProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EDBEAA1CA4E44000B9CAB5 /* CLDashboardProgressLayer.m */; };
 		90EDBEAE1CA4F2E000B9CAB5 /* subtract@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EDBEAD1CA4F2E000B9CAB5 /* subtract@2x.png */; };
 		90EDBEB01CA4F2E700B9CAB5 /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EDBEAF1CA4F2E700B9CAB5 /* add@2x.png */; };
+		D2086BC41CA521D800FEEE3F /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2086BC31CA521D800FEEE3F /* logo@2x.png */; };
 		D27299491C94601900DEEF6C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27299481C94601900DEEF6C /* AVFoundation.framework */; };
 		D2F34F621CA436B50039337A /* btn-PREVIOUS-240x240-21.png in Resources */ = {isa = PBXBuildFile; fileRef = D2F34F5C1CA436B50039337A /* btn-PREVIOUS-240x240-21.png */; };
 		D2F34F631CA436B50039337A /* btn-NEXT-240x240-21.png in Resources */ = {isa = PBXBuildFile; fileRef = D2F34F5D1CA436B50039337A /* btn-NEXT-240x240-21.png */; };
@@ -117,6 +118,7 @@
 		90EDBEAA1CA4E44000B9CAB5 /* CLDashboardProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLDashboardProgressLayer.m; sourceTree = "<group>"; };
 		90EDBEAD1CA4F2E000B9CAB5 /* subtract@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "subtract@2x.png"; sourceTree = "<group>"; };
 		90EDBEAF1CA4F2E700B9CAB5 /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add@2x.png"; sourceTree = "<group>"; };
+		D2086BC31CA521D800FEEE3F /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		D27299481C94601900DEEF6C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D2F34F5C1CA436B50039337A /* btn-PREVIOUS-240x240-21.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-PREVIOUS-240x240-21.png"; sourceTree = "<group>"; };
 		D2F34F5D1CA436B50039337A /* btn-NEXT-240x240-21.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-NEXT-240x240-21.png"; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				D2FAFECB1C97DA8C0042FBD0 /* AudioToolbox.framework */,
 				D27299481C94601900DEEF6C /* AVFoundation.framework */,
 				90EDBEA71CA4E44000B9CAB5 /* CLDashboardProgressView.h */,
+				D2086BC31CA521D800FEEE3F /* logo@2x.png */,
 				90EDBEA81CA4E44000B9CAB5 /* CLDashboardProgressView.m */,
 				90EDBEA91CA4E44000B9CAB5 /* CLDashboardProgressLayer.h */,
 				90EDBEAA1CA4E44000B9CAB5 /* CLDashboardProgressLayer.m */,
@@ -395,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9028B45F1C993BC300FB79E9 /* Lato-Light.ttf in Resources */,
+				D2086BC41CA521D800FEEE3F /* logo@2x.png in Resources */,
 				D2F34F651CA436B50039337A /* btn-status-240x240-21.png in Resources */,
 				9028B46D1C99462C00FB79E9 /* FZLTHK.TTF in Resources */,
 				90BB040D1C917DA8009D0CBD /* 2@2x.jpg in Resources */,
@@ -604,7 +608,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = susu.test.mockup;
 				PRODUCT_NAME = mockup;
-				PROVISIONING_PROFILE = "6c80420b-12f1-45ed-95b8-c33fec6cc498";
+				PROVISIONING_PROFILE = "8818a17b-4697-4158-98e6-e777921fb36f";
 			};
 			name = Debug;
 		};
@@ -620,7 +624,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = susu.test.mockup;
 				PRODUCT_NAME = mockup;
-				PROVISIONING_PROFILE = "6c80420b-12f1-45ed-95b8-c33fec6cc498";
+				PROVISIONING_PROFILE = "8818a17b-4697-4158-98e6-e777921fb36f";
 			};
 			name = Release;
 		};
