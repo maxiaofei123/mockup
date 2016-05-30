@@ -608,7 +608,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = susu.test.mockup;
 				PRODUCT_NAME = mockup;
-				PROVISIONING_PROFILE = "8818a17b-4697-4158-98e6-e777921fb36f";
+				PROVISIONING_PROFILE = "70edbd8a-e592-409a-a399-eadfe399081a";
 			};
 			name = Debug;
 		};
@@ -624,7 +624,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = susu.test.mockup;
 				PRODUCT_NAME = mockup;
-				PROVISIONING_PROFILE = "8818a17b-4697-4158-98e6-e777921fb36f";
+				PROVISIONING_PROFILE = "70edbd8a-e592-409a-a399-eadfe399081a";
 			};
 			name = Release;
 		};
