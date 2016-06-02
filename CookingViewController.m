@@ -732,7 +732,7 @@ static SystemSoundID shake_sound_male_id = 0;
                 
         }else{
                 
-            titleLabel.font = [UIFont fontWithName:@"Lato-Light" size:32];
+            titleLabel.font = [UIFont fontWithName:@"Lato-Regular" size:32];
         }
 
         titleLabel.textColor = [UIColor colorWithRed:229/255. green:229/255. blue:230/255. alpha:0.5];
